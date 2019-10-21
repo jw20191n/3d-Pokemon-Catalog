@@ -11,10 +11,8 @@ class PokemonController < ApplicationController
 
     def update
         @pokemon = Pokemon.find(params[:id])
-        @new_likes = @pokemon.likes + 1
-        @pokemon.update(likes: @new_likes)
-        #hash = JSON.parse(@pokemon)
-       # @pokemon.update(hash)
+        hash = JSON.parse(request.raw_post)
+        @pokemon.update(hash)
         render json:@pokemon
     end
 end
