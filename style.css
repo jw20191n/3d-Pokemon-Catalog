@@ -1,0 +1,13 @@
+
+div#container {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+}
+
+div.card{
+    width:180px;
+    height:400px;
+    margin:20px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
