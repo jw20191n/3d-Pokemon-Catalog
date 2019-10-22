@@ -1,39 +1,40 @@
-// let scene, camera, renderer;
-// function init(){
-//     scene = new THREE.Scene();
-//     camera = new THREE.PerspectiveCamera(75, window.innerWidth/innerHeight, 0.1, 1000);
-//     scene.background = new THREE.Color(0xdddddd);
-//     camera.position.z = 5;
-//     renderer = new THREE.WebGLRenderer({antialias: true, alpha: true } );
-//     renderer.setClearColor(0xff0000);
-//     renderer.setSize(window.innerWidth, window.innerHeight);
-//     document.body.appendChild(renderer.domElement);
-//     window.addEventListener('resize', () =>{
-// 	    renderer.setSize(window.innerWidth, window.innerHeight);
-// 	    camera.aspect = window.innerWidth/innerHeight;
-//         camera.updateProjectionMatrix();
-//         })
-//     light = new THREE.PointLight(0xFFFFFF, 1, 20);
-//     light.position.set(1,1,1);
-//     scene.add(light);
-//     renderer = new THREE.WebGLRenderer({antialias:true});
-//     renderer.setSize(window.innerWidth,window.innerHeight);
-//     document.body.appendChild(renderer.domElement);
-//     console.log('hey man')
+let scene, camera, renderer;
+function init(){
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth/innerHeight, 0.1, 1000);
+    scene.background = new THREE.Color(0xdddddd);
+    camera.position.z = 5;
+    renderer = new THREE.WebGLRenderer({antialias: true, alpha: true } );
+    renderer.setClearColor(0xff0000);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    window.addEventListener('resize', () =>{
+	    renderer.setSize(window.innerWidth, window.innerHeight);
+	    camera.aspect = window.innerWidth/innerHeight;
+        camera.updateProjectionMatrix();
+        })
+    light = new THREE.PointLight(0xFFFFFF, 1, 20);
+    light.position.set(1,1,1);
+    scene.add(light);
+    renderer = new THREE.WebGLRenderer({antialias:true});
+    renderer.setSize(window.innerWidth,window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    console.log('hey man')
 
-//     // var raycaster = new THREE.Raycaster();
-//     // var mouse= new THREE.Vector2();
-// }
+    // var raycaster = new THREE.Raycaster();
+    // var mouse= new THREE.Vector2();
+}
 
-// window.addEventListener('click', (event)=>{
-//     if(event.target.className === 'card-img-top'){
-//         let id = event.target.getAttribute('data-id')
-//        console.log('id: ' + id); 
-//     }
+window.addEventListener('click', (event)=>{
+    if(event.target.className === 'card-img-top'){
+        let id = event.target.getAttribute('data-id')
+       console.log('id: ' + id); 
+    }
     
-// })
+})
 
 const container = document.getElementById('container');
+const newContainer = document.querySelector('.glider');
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -52,24 +53,37 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
 
     function renderPokemon({name, id, image, likes, move, poke_type}){
+        const gliderTrack = document.querySelector('.glider-track');
         let div = document.createElement('div');
-        div.classList.add('card');
+        div.classList.add('pokeCard');
         div.setAttribute('data-id', id);
         div.innerHTML = `
-            <img src=${image} class='card-img-top' data-id=${id}>
-            <div class='card-body'>
-                <h3 class='card-title'>${name}</h3>
-                <h5>Type: ${poke_type}</h5>
-                <h5>Move: ${move}</h5>
-                <p class='card-text'>Likes: ${likes} </p>
-                <button class="btn">like</button>
-            </div>
-        `;
-        container.appendChild(div);
+            <img src=${image} class="pokemonImg">`;
+            // <div class='card-body'>
+            //     <h3 class='card-title'>${name}</h3>
+            //     <h5>Type: ${poke_type}</h5>
+            //     <h5>Move: ${move}</h5>
+            //     <p class='card-text'>Likes: ${likes} </p>
+            //     <button class="btn">like</button>
+            // </div>
+        gliderTrack.appendChild(div);
     }
 
+    function glider(){
+        new Glider(document.querySelector('.glider'), {
+            slidesToScroll: 1,
+            slidesToShow: 5,
+            draggable: true,
+            dots: '.dots',
+            arrows: {
+                prev: '.glider-prev',
+                next: '.glider-next'
+            }
+          })
+    }
+    glider();
 
-    container.addEventListener('click', (event)=>{
+    newContainer.addEventListener('click', (event)=>{
         let target = event.target.className
         if(target === 'btn'){
            let likeString = event.target.parentNode.querySelector('p').innerText;
