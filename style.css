@@ -1,15 +1,15 @@
-
 div#container {
     display: flex;
     position: fixed;
     bottom: 20px;
-    width: 100%;
 }
 
-div.card{
-    width:180px;
-    height:400px;
+div.pokeCard{
+    width: 200px;
+    height: auto;
     margin: 10px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
+
+
 
