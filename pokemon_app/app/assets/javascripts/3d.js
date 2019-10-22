@@ -1,3 +1,4 @@
+
 let scene, camera, renderer;
 function init(){
     scene = new THREE.Scene();
@@ -32,3 +33,5 @@ window.addEventListener('click', (event)=>{
     }
     
 })
+
+init();
