@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         // while(container.firstChild){
         //     container.removeChild(container.firstChild)
         // }
+    
         fetch('http://localhost:3000/pokemons')
         .then(resp => resp.json())
         .then(data => {
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         `;
         container.appendChild(div);
     }
+
 
     container.addEventListener('click', (event)=>{
         let target = event.target.className
