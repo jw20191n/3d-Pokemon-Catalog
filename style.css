@@ -1,8 +1,8 @@
 body{
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 div#container {
@@ -22,8 +22,23 @@ img.pokemonImg{
     width: 100%;
 }
 
+.flex{
+    /* display: flex;
+    flex-direction: row; */
+    width: 100vw;
+    min-height: 500px;
+}
+
 #viewer {
     width: 50%;
     height: calc(100% - 200px);
+}
+
+#pokemonInfo{
+    width: 50%;
+    position: relative;
+    float: right;
+    margin-top: -450px;
+    padding-left:10%;
 }
 
