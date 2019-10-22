@@ -22,4 +22,8 @@ img.pokemonImg{
     width: 100%;
 }
 
+#viewer {
+    width: 50%;
+    height: calc(100% - 200px);
+}
 
