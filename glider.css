@@ -24,6 +24,7 @@
     user-select: none;
     cursor: -webkit-grab;
     cursor: grab;
+    width: 85%;
   }
   .glider.draggable .glider-slide img {
     user-select: none;
@@ -61,7 +62,7 @@
     border: 0;
     top: 60px;
     cursor: pointer;
-    color: white;
+    color: grey;
     opacity: 1;
     line-height: 1;
     transition: opacity .5s cubic-bezier(.17,.67,.83,.67),
