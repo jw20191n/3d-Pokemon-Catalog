@@ -130,6 +130,7 @@ function loadAsset( id, size ) {
                     }
                     scaler.name = "3d-model";
                     scene.add( scaler );
+
                     renderer.render( scene, camera );
                     // let model = scene.getObjectByName('3d-model')
                     
@@ -139,6 +140,17 @@ function loadAsset( id, size ) {
                     
                     //     model.rotation.y = Math.sin( time ) * 5; 
                     //     camera.lookAt( 0, 1.5, 0 );
+
+                 
+//                     let model = scene.getObjectByName('3d-model')
+
+//                     function animate( ) {
+
+                        // var time = performance.now() / 5000;
+                    
+                        // model.rotation.y = Math.sin( time ) * 5; 
+                        // camera.lookAt( 0, 1.5, 0 );
+
                     
                     //     renderer.render( scene, camera );
                     //     requestAnimationFrame( animate );
@@ -185,6 +197,7 @@ if ( API_KEY.startsWith( '**' ) ) {
 
 }
 
+
 //================================Claire's experiment with 3d stuff====================
 
 
@@ -223,6 +236,7 @@ viewer.addEventListener('click', function(){
         console.log('first started animation because requestId is undefined')
     }
 })
+
 
 
 
