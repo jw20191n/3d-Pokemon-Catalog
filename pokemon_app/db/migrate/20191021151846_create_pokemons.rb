@@ -7,7 +7,7 @@ class CreatePokemons < ActiveRecord::Migration[6.0]
       t.string :image
       t.integer :likes
       t.string :model_key
-
+      t.string :size
       t.timestamps
     end
   end

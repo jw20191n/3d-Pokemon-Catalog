@@ -30,8 +30,8 @@ function printInfo(data){
     info.setAttribute('data-id', data.id);
 
     //attach model rendering to this function
-    loadAsset(`${data.model_key}`);
-
+    loadAsset(`${data.model_key}`, `${data.size}`);    
+    
     let infoImage = document.createElement('img');
     infoImage.setAttribute('id', 'pokeInfoImage');
     infoImage.setAttribute('src', `${data.image}`);
