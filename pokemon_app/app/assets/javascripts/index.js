@@ -23,8 +23,8 @@ const newContainer = document.querySelector('.glider');
 //     renderer.setSize(window.innerWidth,window.innerHeight);
 //     document.body.appendChild(renderer.domElement);
 //     console.log('hey man')
-//        var raycaster = new THREE.Raycaster();
-//        var mouse= new THREE.Vector2();
+    //    var raycaster = new THREE.Raycaster();
+    //    var mouse= new THREE.Vector2();
 //     
 // }
 
@@ -128,105 +128,121 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 // POLY REST API
 const API_KEY = 'AIzaSyBBucFwpS56u9Os49tydauh3bgUaQtkLdg';
+let scene, camera, renderer;
+
+
 
 function loadAsset( id ) {
 //3d experiment
-const WIDTH = viewer.offsetWidth;
-const HEIGHT = viewer.offsetHeight;
+    const WIDTH = viewer.offsetWidth;
+    const HEIGHT = viewer.offsetHeight;
 
-var camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.01, 100 );
-camera.position.set( 5, 3, 5 );
-camera.lookAt( 0, 1.5, 0 );
+    camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.01, 100 );
+    camera.position.set( 5, 3, 5 );
+    camera.lookAt( 0, 1.5, 0 );
 
-var scene = new THREE.Scene();
-scene.background = new THREE.Color(0xffffff);
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff);
 
-var ambient = new THREE.HemisphereLight( 0xbbbbff, 0x886666, 0.75 );
-ambient.position.set( -0.5, 0.75, -1 );
-scene.add( ambient );
+    var ambient = new THREE.HemisphereLight( 0xbbbbff, 0x886666, 0.75 );
+    ambient.position.set( -0.5, 0.75, -1 );
+    scene.add( ambient );
 
-var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
-light.position.set( 1, 0.75, 0.5 );
-scene.add( light );
+    var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
+    light.position.set( 1, 0.75, 0.5 );
+    scene.add( light );
 
-var renderer = new THREE.WebGLRenderer();
-renderer.setPixelRatio( window.devicePixelRatio );
-renderer.setSize( WIDTH, HEIGHT );
-viewer.appendChild( renderer.domElement );
+    renderer = new THREE.WebGLRenderer();
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    viewer.appendChild( renderer.domElement );
+   
 
-    var url = `https://poly.googleapis.com/v1/assets/${id}/?key=${API_KEY}`;
+        var url = `https://poly.googleapis.com/v1/assets/${id}/?key=${API_KEY}`;
 
-    var request = new XMLHttpRequest();
-    request.open( 'GET', url, true ); 
-    console.log(request)
-    request.addEventListener( 'load', function ( event ) {
+        var request = new XMLHttpRequest();
+        request.open( 'GET', url, true ); 
+        request.addEventListener( 'load', function ( event ) {
 
-        var asset = JSON.parse( event.target.response );
+            var asset = JSON.parse( event.target.response );
 
-        // asset_name.textContent = asset.displayName;
-        // asset_author.textContent = asset.authorName;
+            // asset_name.textContent = asset.displayName;
+            // asset_author.textContent = asset.authorName;
 
-        var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
+            var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
 
-        if ( format !== undefined ) {
+            if ( format !== undefined ) {
 
-            var obj = format.root;
-            var mtl = format.resources.find( resource => { return resource.url.endsWith( 'mtl' ) } );
+                var obj = format.root;
+                var mtl = format.resources.find( resource => { return resource.url.endsWith( 'mtl' ) } );
 
-            //var path = obj.url.slice( 0, obj.url.indexOf( obj.relativePath ) );
+                var loader = new THREE.MTLLoader();
+                loader.setCrossOrigin( true );
+                loader.setMaterialOptions( { ignoreZeroRGBs: true } );
+                // loader.setTexturePath( path );
+                loader.load( mtl.url, function ( materials ) {
 
-            var loader = new THREE.MTLLoader();
-            loader.setCrossOrigin( true );
-            loader.setMaterialOptions( { ignoreZeroRGBs: true } );
-            // loader.setTexturePath( path );
-            loader.load( mtl.url, function ( materials ) {
+                    var loader = new THREE.OBJLoader();
+                    loader.setMaterials( materials );
+                    loader.load( obj.url, function ( object ) {
 
-                var loader = new THREE.OBJLoader();
-                loader.setMaterials( materials );
-                loader.load( obj.url, function ( object ) {
+                        var box = new THREE.Box3();
+                        box.setFromObject( object );
 
-                    var box = new THREE.Box3();
-                    box.setFromObject( object );
+                        // re-center
 
-                    // re-center
+                        var center = box.getCenter();
+                        center.y = box.min.y;
+                        object.position.sub( center );
 
-                    var center = box.getCenter();
-                    center.y = box.min.y;
-                    object.position.sub( center );
+                        // scale
 
-                    // scale
+                        var scaler = new THREE.Group();
+                        scaler.add( object );
+                        scaler.name = "3d-model";
+                        scaler.scale.set(2,2.4,2)
+                        scene.add( scaler );
+                        scaler.position.set( -2, 2, 0 )
+                        let model = scene.getObjectByName('3d-model')
 
-                    var scaler = new THREE.Group();
-                    scaler.add( object );
-                    object.name = "3d-model";
-                    console.log(object)
-                    scaler.scale.setScalar( 6 / box.getSize().length() );
-                    scene.add( scaler );
+                        function animate( ) {
+
+                            var time = performance.now() / 5000;
+                        
+                            model.rotation.y = Math.sin( time ) * 5; 
+                            camera.lookAt( 0, 1.5, 0 );
+                        
+                            renderer.render( scene, camera );
+                            requestAnimationFrame( animate );
+                        
+                        }
+                        requestAnimationFrame( animate ); 
+
+
+                    } );
 
                 } );
 
-            } );
+            }
 
-        }
-
-    } );
-    request.send( null );
-    function animate( ) {
-
-        var time = performance.now() / 5000;
-    
-        camera.position.x = Math.sin( time ) * 5; 
-        camera.position.z = Math.cos( time ) * 5;
-        camera.lookAt( 0, 1.5, 0 );
-    
-        renderer.render( scene, camera );
-        requestAnimationFrame( animate );
-    
-    }
-    
-    requestAnimationFrame( animate ); 
+        } );
+        request.send( null );
 
 }
+
+let raycaster = new THREE.Raycaster();
+let mouse= new THREE.Vector2();
+function onMouseMove(event){
+    event.preventDefault();
+
+    mouse.x = (event.clientX / window.innerWidth) *2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) *2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    alert("Cursor at: " + mouse.x + ", " + mouse.y);
+  }
+
+//window.addEventListener('click', onMouseMove);
 
 if ( API_KEY.startsWith( '**' ) ) {
 
@@ -234,7 +250,6 @@ if ( API_KEY.startsWith( '**' ) ) {
 
 }
 
-//loadAsset( '9Apgj-wpfgb' );  going to call this in other file
 
 
 
