@@ -35,10 +35,42 @@ img.pokemonImg{
 }
 
 #pokemonInfo{
-    width: 50%;
+    width: 40%;
+    height:400px;
     position: relative;
     float: right;
     margin-top: -450px;
     padding-left:10%;
+    /* background-image: url(pokemon_app/app/assets/images/electric.png); */
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#pokeInfoWords{
+   margin-top: 220px;
+   margin-left: -100px;
+}
+
+#pokeInfoImage{
+    margin-top: -320px;
+    margin-left: -65px;
+    width: 140px;
+    height: 140px;
+}
+
+button.custom-button{
+    /* font-family: 'Titillium Web', sans-serif; */
+    border: 2px solid red;
+    border-radius: 4px;
+    color: red;
+}
+
+.custom-button:hover{
+    color: white;
+    background: red;
+    transition: all 0.4s ease 0s;
+    /* font-family: 'Titillium Web', sans-serif; */
+    border-radius: 4px;
+    border: 2px solid white; 
 }
 

@@ -18,25 +18,33 @@ function getPokemonInfo(cardId){
 }
 
 function printInfo(data){
-    pokemonInfo.innerHTML = `
-        <h3>Name: ${data.name}</h3>
-        <h5>Type: ${data.poke_type}</h5>
-        <h5>Move: ${data.move}</h5>
+    let info = document.createElement('div');
+    info.setAttribute('id', 'pokeInfoWords');
+    info.innerHTML = `
+        <h5>${data.name}</h5>
+        <h6>Type: ${data.poke_type}</6>
+        <h6>Move: ${data.move}</h6>
         <p>Likes: ${data.likes} </p>
-        <button class="btn">like</button> 
-    ` 
-    pokemonInfo.setAttribute('data-id', data.id);
+        <button class="custom-button"> like</button>
+    `; 
+    info.setAttribute('data-id', data.id);
 
     //attach model rendering to this function
     loadAsset(`${data.model_key}`);
 
-    
+    let infoImage = document.createElement('img');
+    infoImage.setAttribute('id', 'pokeInfoImage');
+    infoImage.setAttribute('src', `${data.image}`);
 
+    pokemonInfo.innerHTML = '';
+    pokemonInfo.appendChild(info);
+    pokemonInfo.appendChild(infoImage);
+    pokemonInfo.setAttribute('style', `background-image: url(pokemon_app/app/assets/images/${data.poke_type}.png);`)
 }
 
 pokemonInfo.addEventListener('click', ()=>{
     let target = event.target.className;
-    if(target === 'btn'){
+    if(target === 'custom-button'){
        let likeString = event.target.parentNode.querySelector('p').innerText;
        let likeArray = likeString.split(' ');
        let number = parseInt(likeArray[1]);
