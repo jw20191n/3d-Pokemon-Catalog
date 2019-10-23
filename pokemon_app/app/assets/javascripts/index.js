@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     function glider(){
         new Glider(document.querySelector('.glider'), {
             slidesToScroll: 1,
-            slidesToShow: 4.5,
+            slidesToShow: 8,
             draggable: true,
             dots: '.dots',
             arrows: {
