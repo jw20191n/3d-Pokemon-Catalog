@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_151846) do
     t.string "move"
     t.string "image"
     t.integer "likes"
+    t.string "model_key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

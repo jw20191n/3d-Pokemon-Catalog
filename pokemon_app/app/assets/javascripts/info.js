@@ -2,7 +2,6 @@
 const pokemonInfo = document.getElementById('pokemonInfo');
 
 newContainer.addEventListener('click', () => {
-    console.log("clicked");
     let target = event.target;
     if (target.classList.contains('pokeCard')){
         let cardId = target.getAttribute('data-id');
@@ -14,7 +13,6 @@ function getPokemonInfo(cardId){
     fetch(`http://localhost:3000/pokemons/${cardId}`)
     .then(resp => resp.json())
     .then(data => {
-        console.log(data);
         printInfo(data);
     })
 }
@@ -28,6 +26,12 @@ function printInfo(data){
         <button class="btn">like</button> 
     ` 
     pokemonInfo.setAttribute('data-id', data.id);
+
+    //attach model rendering to this function
+    loadAsset(`${data.model_key}`);
+
+    
+
 }
 
 pokemonInfo.addEventListener('click', ()=>{
