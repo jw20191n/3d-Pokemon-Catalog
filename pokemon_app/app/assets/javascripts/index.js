@@ -23,17 +23,20 @@ const newContainer = document.querySelector('.glider');
 //     renderer.setSize(window.innerWidth,window.innerHeight);
 //     document.body.appendChild(renderer.domElement);
 //     console.log('hey man')
-
-//     // var raycaster = new THREE.Raycaster();
-//     // var mouse= new THREE.Vector2();
+//        var raycaster = new THREE.Raycaster();
+//        var mouse= new THREE.Vector2();
+//     
 // }
 
-window.addEventListener('click', (event)=>{
-    if(event.target.className === 'card-img-top'){
-        let id = event.target.getAttribute('data-id')
-       console.log('id: ' + id); 
-    }
-})
+
+//commented below out in favor of using event listener in other js file
+
+// window.addEventListener('click', (event)=>{
+//     if(event.target.className === 'card-img-top'){
+//         let id = event.target.getAttribute('data-id')
+//        console.log('id: ' + id); 
+//     }
+// })
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -123,6 +126,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     getPokemon();
 })
 
+// POLY REST API
+const API_KEY = 'AIzaSyBBucFwpS56u9Os49tydauh3bgUaQtkLdg';
+
+function loadAsset( id ) {
 //3d experiment
 const WIDTH = viewer.offsetWidth;
 const HEIGHT = viewer.offsetHeight;
@@ -132,9 +139,7 @@ camera.position.set( 5, 3, 5 );
 camera.lookAt( 0, 1.5, 0 );
 
 var scene = new THREE.Scene();
-scene.background = new THREE.Color( 'white'  );
-
-scene.add( new THREE.GridHelper( 10, 10 ) );
+scene.background = new THREE.Color(0xffffff);
 
 var ambient = new THREE.HemisphereLight( 0xbbbbff, 0x886666, 0.75 );
 ambient.position.set( -0.5, 0.75, -1 );
@@ -149,37 +154,17 @@ renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( WIDTH, HEIGHT );
 viewer.appendChild( renderer.domElement );
 
-function animate() {
-
-    var time = performance.now() / 5000;
-
-    camera.position.x = Math.sin( time ) * 5;
-    camera.position.z = Math.cos( time ) * 5;
-    camera.lookAt( 0, 1.5, 0 );
-
-    renderer.render( scene, camera );
-    requestAnimationFrame( animate );
-
-}
-
-requestAnimationFrame( animate );
-
-// POLY REST API
-
-const API_KEY = 'AIzaSyBBucFwpS56u9Os49tydauh3bgUaQtkLdg';
-
-function loadAsset( id ) {
-
     var url = `https://poly.googleapis.com/v1/assets/${id}/?key=${API_KEY}`;
 
     var request = new XMLHttpRequest();
-    request.open( 'GET', url, true );
+    request.open( 'GET', url, true ); 
+    console.log(request)
     request.addEventListener( 'load', function ( event ) {
 
         var asset = JSON.parse( event.target.response );
 
-        asset_name.textContent = asset.displayName;
-        asset_author.textContent = asset.authorName;
+        // asset_name.textContent = asset.displayName;
+        // asset_author.textContent = asset.authorName;
 
         var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
 
@@ -188,7 +173,7 @@ function loadAsset( id ) {
             var obj = format.root;
             var mtl = format.resources.find( resource => { return resource.url.endsWith( 'mtl' ) } );
 
-            var path = obj.url.slice( 0, obj.url.indexOf( obj.relativePath ) );
+            //var path = obj.url.slice( 0, obj.url.indexOf( obj.relativePath ) );
 
             var loader = new THREE.MTLLoader();
             loader.setCrossOrigin( true );
@@ -213,6 +198,8 @@ function loadAsset( id ) {
 
                     var scaler = new THREE.Group();
                     scaler.add( object );
+                    object.name = "3d-model";
+                    console.log(object)
                     scaler.scale.setScalar( 6 / box.getSize().length() );
                     scene.add( scaler );
 
@@ -224,6 +211,20 @@ function loadAsset( id ) {
 
     } );
     request.send( null );
+    function animate( ) {
+
+        var time = performance.now() / 5000;
+    
+        camera.position.x = Math.sin( time ) * 5; 
+        camera.position.z = Math.cos( time ) * 5;
+        camera.lookAt( 0, 1.5, 0 );
+    
+        renderer.render( scene, camera );
+        requestAnimationFrame( animate );
+    
+    }
+    
+    requestAnimationFrame( animate ); 
 
 }
 
@@ -233,7 +234,7 @@ if ( API_KEY.startsWith( '**' ) ) {
 
 }
 
-loadAsset( '9Apgj-wpfgb' );
+//loadAsset( '9Apgj-wpfgb' );  going to call this in other file
 
 
 

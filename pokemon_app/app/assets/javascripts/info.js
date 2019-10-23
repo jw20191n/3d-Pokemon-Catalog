@@ -28,6 +28,12 @@ function printInfo(data){
         <button class="btn">like</button> 
     ` 
     pokemonInfo.setAttribute('data-id', data.id);
+
+    //attach model rendering to this function
+    loadAsset(`${data.model_key}`);
+   
+
+
 }
 
 pokemonInfo.addEventListener('click', ()=>{
