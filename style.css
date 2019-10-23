@@ -3,12 +3,14 @@ body{
     min-height: 100vh;
     margin: 0;
     /* overflow: hidden; */
+
 }
 
 div#container {
     display: flex;
     position: fixed;
     bottom: 20px;
+
 }
 
 div.pokeCard{
