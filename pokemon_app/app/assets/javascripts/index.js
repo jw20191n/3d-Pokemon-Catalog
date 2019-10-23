@@ -120,13 +120,12 @@ function loadAsset( id ) {
                     scaler.position.set( -5, 2, 0 )
                     let model = scene.getObjectByName('3d-model')
 
-
                     function animate( ) {
 
-                        var time = performance.now() / 5000;
+                        // var time = performance.now() / 5000;
                     
-                        model.rotation.y = Math.sin( time ) * 5; 
-                        camera.lookAt( 0, 1.5, 0 );
+                        // model.rotation.y = Math.sin( time ) * 5; 
+                        // camera.lookAt( 0, 1.5, 0 );
                     
                         renderer.render( scene, camera );
                         requestAnimationFrame( animate );
@@ -172,3 +171,4 @@ if ( API_KEY.startsWith( '**' ) ) {
     alert( 'Sample incorrectly set up. Please enter your API Key for the Poly API in the API_KEY variable.' );
 
 }
+
