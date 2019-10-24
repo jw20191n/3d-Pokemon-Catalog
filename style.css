@@ -59,27 +59,15 @@ img.pokemonImg{
     width: 140px;
     height: 140px;
 }
-
+ #intro{
+     margin-left: -600px;
+ }
 
 /* =====================      LIKE BUTTON         ================== */
 
 button.custom-button{
     border: none;
     background: none;
-    /* font-family: 'Titillium Web', sans-serif; */
-    /* border: 2px solid red;
-    border-radius: 4px;
-    color: red; */
-    /* background-image: url(pokemon_app/app/assets/images/love.svg); */
-}
-
-button.custom-button:hover{
-    /* color: white;
-    background: red;
-    transition: all 0.4s ease 0s;
-    /* font-family: 'Titillium Web', sans-serif; */
-    /* border-radius: 4px;
-    border: 2px solid white;   */
 }
 
 #button-img{
@@ -88,9 +76,9 @@ button.custom-button:hover{
 }
 
 #button-img:hover{
-
     content: url(pokemon_app/app/assets/images/love.png);
 }
+
 
 /* ======================= FILTER FORM STYLING===================== */
 #pokemon-filter-form {

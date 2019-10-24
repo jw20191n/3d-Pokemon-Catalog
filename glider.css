@@ -50,8 +50,8 @@
   .glider-prev,.glider-next {
     user-select: none;
     position: fixed;
-    /* bottom:20px; */
     margin:20px;
+    margin-top:110px;
     outline: none;
     background: none;
     padding: 0;

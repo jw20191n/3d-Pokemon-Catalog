@@ -29,6 +29,7 @@ function getPokemonInfo(cardId){
 }
 
 function printInfo(data){
+    pokemonInfo.innerHTML = '';
     let info = document.createElement('div');
     info.setAttribute('id', 'pokeInfoWords');
     info.innerHTML = `
