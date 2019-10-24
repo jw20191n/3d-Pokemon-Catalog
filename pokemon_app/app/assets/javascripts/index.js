@@ -1,6 +1,7 @@
 const container = document.getElementById('container');
 const newContainer = document.querySelector('.glider');
 let requestId = true;
+const input = document.getElementById('pokemon-filter-input');
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -206,4 +207,34 @@ viewer.addEventListener('click', function(){
         play(model);
         requestId = true;
     }
+})
+
+//=============================    filter pokemon       ===========================
+
+input.addEventListener('input', ()=> {
+    let gliderTrack = document.querySelector('.glider-track');
+    gliderTrack.innerHTML = '';
+    let inputValue = event.target.value;
+
+    fetch('http://localhost:3000/pokemons')
+        .then(resp => resp.json())
+        .then(data => {
+           let array = data.filter(element => element.name.toLowerCase().includes(inputValue)
+           || element.poke_type.toLowerCase().includes(inputValue));
+           if(inputValue.length === 0 || inputValue === undefined){
+                scene.remove(scene.getObjectByName('3d-model'));
+                document.getElementById('pokemonInfo').innerHTML = '';
+                document.getElementById('pokemonInfo').removeAttribute('style');
+           }
+           array.forEach(element => {
+                let div = document.createElement('div');
+                div.classList.add('pokeCard');
+                div.setAttribute('data-id', element.id);
+                div.innerHTML = `
+                    <img src=${element.image} class="pokemonImg">`;
+                gliderTrack.appendChild(div);
+           });
+        })
+
+        
 })
