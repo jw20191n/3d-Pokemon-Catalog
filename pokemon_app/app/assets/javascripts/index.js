@@ -1,6 +1,6 @@
 const container = document.getElementById('container');
 const newContainer = document.querySelector('.glider');
-let requestId;
+let requestId = true;
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     camera.lookAt( 0, 1.5, 0 );
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xff0000);
+    scene.background = new THREE.Color(0x008080);
     renderer = new THREE.WebGLRenderer();
 
 
@@ -132,33 +132,8 @@ function loadAsset( id, size ) {
                     scene.add( scaler );
 
                     renderer.render( scene, camera );
-                    // let model = scene.getObjectByName('3d-model')
-                    
-                    // function animate( ) {
-
-                    //     var time = performance.now() / 5000;
-                    
-                    //     model.rotation.y = Math.sin( time ) * 5; 
-                    //     camera.lookAt( 0, 1.5, 0 );
-
-                 
-//                     let model = scene.getObjectByName('3d-model')
-
-//                     function animate( ) {
-
-                        // var time = performance.now() / 5000;
-                    
-                        // model.rotation.y = Math.sin( time ) * 5; 
-                        // camera.lookAt( 0, 1.5, 0 );
-
-                    
-                    //     renderer.render( scene, camera );
-                    //     requestAnimationFrame( animate );
-                    
-                    // }
-                    // requestId = requestAnimationFrame( animate ); 
-                    // // console.log(requestId);
-
+                   // console.log(scaler)
+                    play(scaler);
                 } );
 
             } );
@@ -198,45 +173,37 @@ if ( API_KEY.startsWith( '**' ) ) {
 }
 
 
-//================================Claire's experiment with 3d stuff====================
+//================================Animation Loop Controls====================
 
+function update(model) {
+
+    var time = performance.now() / 5000;
+    model.rotation.y = Math.sin( time ) * 5; 
+    camera.lookAt( 0, 1.5, 0 );
+}
+function render() {
+    renderer.render( scene, camera );
+}
+
+function play(model){
+    renderer.setAnimationLoop( () =>{
+        update(model);
+        render();
+    } );
+}
+function stop(model) {
+    renderer.setAnimationLoop( null );
+}
 
 viewer.addEventListener('click', function(){
-    // cancelAnimationFrame(requestId);
     let model = scene.getObjectByName('3d-model')
-    // console.log(requestId);
+    //console.log(model);
     if (requestId){
-        function animate( ) {
-
-            var time = performance.now() / 5000;
-        
-            model.rotation.y = -1.5; 
-            camera.lookAt( 0, 1.5, 0 );
-        
-            renderer.render( scene, camera );
-            requestAnimationFrame( animate );
-        }
-        requestAnimationFrame( animate ); 
-        requestId = undefined;
-        // window.cancelAnimationFrame(requestId);
-        // window.cancelAnimationFrame(requestId);
-        // console.log('in else statement and the requestId is: '+ requestId);
+        stop(model);
+        requestId = false;
+       
     }else{
-        function animate( ) {
-
-            var time = performance.now() / 5000;
-        
-            model.rotation.y = Math.sin( time ) * 5; 
-            camera.lookAt( 0, 1.5, 0 );
-        
-            renderer.render( scene, camera );
-            requestAnimationFrame( animate );
-        }
-        requestId = requestAnimationFrame( animate ); 
-        console.log('first started animation because requestId is undefined')
+        play(model);
+        requestId = true;
     }
 })
-
-
-
-
