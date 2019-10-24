@@ -42,8 +42,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
           })
     }
 
-    renderScene();
-    getPokemon();
+    //LET THE PAGE INFO RENDER 1 SECOND AFTER PAGE LOADED
+    setTimeout(function(){
+        renderScene();
+        getPokemon();
+        form.setAttribute('style', 'display:block');
+        document.querySelector('.glider-prev').setAttribute('style', 'display:block');
+        document.querySelector('.glider-next').setAttribute('style', 'display:block');
+        document.getElementById('pokemonInfo').innerHTML = "<h2 id='intro'>Please click on the Pokemon for more details.</h2><h2 id='intro'>Type in name or type to filter Pokemon.</h2>";
+
+    }, 3000);
+
+    // renderScene();
+    // getPokemon();
 })
 
     // POLY REST API
