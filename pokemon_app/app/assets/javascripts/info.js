@@ -1,11 +1,21 @@
+
 //newContainer pokemonInfo is defined in index.js
 const pokemonInfo = document.getElementById('pokemonInfo');
 
 newContainer.addEventListener('click', () => {
     let target = event.target;
+    console.log(target);
     if (target.classList.contains('pokeCard')){
         let cardId = target.getAttribute('data-id');
         getPokemonInfo(cardId);
+    }
+    if (target.tagName === 'IMG'){
+        let parent = target.parentNode;
+        console.log(parent);
+        if (parent.classList.contains('pokeCard')){
+            let cardId = parent.getAttribute('data-id');
+            getPokemonInfo(cardId);
+        }
     }
 });
 
