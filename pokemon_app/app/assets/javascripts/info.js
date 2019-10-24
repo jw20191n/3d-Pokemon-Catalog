@@ -38,6 +38,40 @@ function printInfo(data){
         <button class="custom-button"> like</button>
     `; 
     info.setAttribute('data-id', data.id);
+    let color = data.poke_type
+        switch (color){
+            case 'Electric':
+                    scene.background.set(0xffd264);
+                    break;
+            case 'Fire':
+                    scene.background.set(0xF2684a);
+                    break;
+            case 'Water':
+                    scene.background.set(0xa2d7d5);
+                    break;
+            case 'Grass':
+                    scene.background.set(0x89c893);
+                    break;
+            case 'Ground':
+                    scene.background.set(0xe0c068);
+                    break;
+            case 'Psychic':
+                    scene.background.set(0xA13959);
+                    break;
+            case 'Ghost':
+                    scene.background.set(0x7c6ebb);
+                    break;
+            case 'Bug':
+                    scene.background.set(0xA8b820);
+                    break;
+            case 'Normal':
+                    scene.background.set(0x6D6D4E);
+                    break;
+            case 'Dragon':
+                    scene.background.set(0xA27DFA);
+                    break;
+        }
+    
 
     //attach model rendering to this function
     loadAsset(`${data.model_key}`, `${data.size}`); 
