@@ -2,6 +2,7 @@ const container = document.getElementById('container');
 const newContainer = document.querySelector('.glider');
 let requestId = true;
 const input = document.getElementById('pokemon-filter-input');
+const form = document.getElementById('pokemon-filter-form');
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 renderPokemon(pokemon);
             }
             glider();
+            // form.setAttribute('style', 'display:block');
         })
     }
 

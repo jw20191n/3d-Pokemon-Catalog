@@ -2,6 +2,7 @@
 //newContainer pokemonInfo is defined in index.js
 const pokemonInfo = document.getElementById('pokemonInfo');
 
+
 newContainer.addEventListener('click', () => {
     let target = event.target;
     console.log(target);
@@ -34,8 +35,9 @@ function printInfo(data){
         <h5>${data.name}</h5>
         <h6>Type: ${data.poke_type}</6>
         <h6>Move: ${data.move}</h6>
-        <p>Likes: ${data.likes} </p>
-        <button class="custom-button"> like</button>
+        <p style="display:inline">Likes: ${data.likes} </p>
+        <button class="custom-button"> <img id="button-img" src="pokemon_app/app/assets/images/love.svg"></button>
+        
     `; 
     info.setAttribute('data-id', data.id);
     let color = data.poke_type
@@ -87,14 +89,24 @@ function printInfo(data){
 }
 
 pokemonInfo.addEventListener('click', ()=>{
-    let target = event.target.className;
-    if(target === 'custom-button'){
-       let likeString = event.target.parentNode.querySelector('p').innerText;
+    let target = event.target;
+    let pTag;
+    let tempId;
+
+    if(target.className === 'custom-button' || target.parentNode.className === 'custom-button'){
+        if (target.tagName === 'BUTTON'){
+            pTag = event.target.parentNode.querySelector('p');
+            tempId = event.target.parentNode.getAttribute('data-id');
+        }else if (target.tagName === 'IMG'){
+            pTag = event.target.parentNode.parentNode.querySelector('p');
+            tempId = event.target.parentNode.parentNode.getAttribute('data-id');
+            console.log(pTag.innerText);
+        }
+       let likeString = pTag.innerText;
        let likeArray = likeString.split(' ');
        let number = parseInt(likeArray[1]);
        number += 1;
-       event.target.parentNode.querySelector('p').innerText = `Likes: ${number}`;
-       let tempId = event.target.parentNode.getAttribute('data-id');
+       pTag.innerText = `Likes: ${number}`;
        incrementLike(tempId, number);
     }
 });
@@ -113,3 +125,5 @@ function incrementLike(tempId, number){
         return resp.json()
     })
 }
+
+
