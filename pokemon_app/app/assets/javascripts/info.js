@@ -38,7 +38,10 @@ function printInfo(data){
         <h6>Move: ${data.move}</h6>
         <p style="display:inline">Likes: ${data.likes} </p>
         <button class="custom-button"> <img id="button-img" src="pokemon_app/app/assets/images/love.svg"></button>
-        
+        <audio autoplay>
+            <source src="pokemon_app/app/assets/audios/${data.audio}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     `; 
     info.setAttribute('data-id', data.id);
     let color = data.poke_type
@@ -81,7 +84,7 @@ function printInfo(data){
        
     let infoImage = document.createElement('img');
     infoImage.setAttribute('id', 'pokeInfoImage');
-    infoImage.setAttribute('src', `${data.image}`);
+    infoImage.setAttribute('src', `pokemon_app/app/assets/images/${data.image}`);
 
     pokemonInfo.innerHTML = '';
     pokemonInfo.appendChild(info);
