@@ -308,8 +308,8 @@ viewer.addEventListener('click', function(){
             document.querySelector('.glider-prev').setAttribute('style', 'display:block');
             document.querySelector('.glider-next').setAttribute('style', 'display:block');
             let info = document.getElementById('pokemonInfo')
-            info.innerHTML = "<h2 id='intro' align='center'>Please click on the Pokemon for more details.</h2><br><h2 id='intro' align='center'>Type in a name or type to filter Pokemon.</h2>";
-            }, 3000);
+            info.innerHTML = "<h2 class='intro' style='margin-left: -600px;font-size: 30px;text-align: center; color:whitesmoke;'>Please click on the Pokemon for more details.</h2><br><h2 class='intro' style='margin-left: -600px;font-size: 30px;text-align: center;color:whitesmoke;'>Type in a name or type to filter Pokemon.</h2>";
+            }, 1000);
         if(runAnimateCube === false){
             console.log(false)
             //  scene.remove(model)

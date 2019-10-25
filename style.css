@@ -59,9 +59,10 @@ img.pokemonImg{
     width: 140px;
     height: 140px;
 }
- #intro{
-     margin-left: -600px;
- }
+
+ /* h2.intro{
+     font-size: 30px;
+ } */
 
 /* =====================      LIKE BUTTON         ================== */
 
