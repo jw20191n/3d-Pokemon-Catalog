@@ -87,7 +87,7 @@ button.custom-button{
 /* ======================= FILTER FORM STYLING===================== */
 #pokemon-filter-form {
     width: 600px;
-    margin-left: 40%;
+    margin-left: 35%;
     margin-right: 40%;
     margin-top: 10px;
   }
@@ -101,4 +101,19 @@ button.custom-button{
   }
   input:focus {
     outline: none;
+  }
+
+/* #exitImg{
+    width:60px;
+    height:50px; 
+    float: left;
+  }  */
+
+  .header{
+      display: flex;
+      flex-direction: row;
+  }
+
+  .center{
+      margin-left:-550px;
   }

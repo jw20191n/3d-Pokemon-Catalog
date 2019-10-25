@@ -8,10 +8,12 @@ let exit = document.createElement('img');
 
 
 function getPokemon(){
-     
+    // let exit = document.createElement('img');
     exit.src = 'pokemon_app/app/assets/images/Exit.png'
-    exit.style.height = '8%';
-    exit.style.width = '25%';
+    exit.setAttribute('id', 'exit-img');
+    exit.style.height = '60px';
+    exit.style.width = '100px';
+    // exit.style.margin-top = '20px';
     exitDiv.appendChild(exit);
  
     fetch('http://localhost:3000/pokemons')
@@ -367,5 +369,6 @@ exit.addEventListener('click',()=>{
     let goodbye = document.createElement('img');
     goodbye.src = "pokemon_app/app/assets/images/pikachu goodbye.gif"
     goodbye.className = "center"
-    document.getElementById('pokemonInfo').appendChild(goodbye)
+    document.getElementById('pokemonInfo').appendChild(goodbye);
+    container.innerHTML = '';
 })
