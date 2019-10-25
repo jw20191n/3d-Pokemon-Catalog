@@ -14,6 +14,14 @@ function getPokemon(){
         }
         glider();
         form.setAttribute('style', 'display:block');
+        let music = document.createElement('AUDIO');
+        music.autoplay = true;
+        music.setAttribute('loop', 'loop');
+        music.setAttribute('id', 'back-music');
+        // music.setAttribute('controls', 'controls');
+        music.innerHTML = '<source src="pokemon_app/app/assets/audios/background.mp3" type="audio/mpeg">';
+        container.appendChild(music);
+
     })
 }
 
@@ -43,7 +51,6 @@ function glider(){
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-    
     renderScene();
     loadStart('aBDajZAsuFE');
 })
@@ -294,10 +301,10 @@ viewer.addEventListener('click', function(){
         
             //LET THE PAGE INFO RENDER 1 SECOND AFTER PAGE LOADED
         
-            let music = document.createElement('AUDIO');
-            music.autoplay = true;
-            music.innerHTML = '<source src="pokemon_app/app/assets/audios/Start.mp3" type="audio/mpeg">';
-            container.appendChild(music);
+        let music = document.createElement('AUDIO');
+        music.autoplay = true;
+        music.innerHTML = '<source src="pokemon_app/app/assets/audios/Start.mp3" type="audio/mpeg">';
+        container.appendChild(music);
 
         setTimeout(function(){
             runAnimateCube = false;
