@@ -18,6 +18,12 @@ newContainer.addEventListener('click', () => {
             getPokemonInfo(cardId);
         }
     }
+    let backMusic = document.getElementById('back-music');
+    backMusic.volume = 0.4;
+    setTimeout(function(){
+        backMusic.volume = 1;
+    },2000)
+
 });
 
 function getPokemonInfo(cardId){

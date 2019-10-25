@@ -60,9 +60,12 @@ img.pokemonImg{
     height: 140px;
 }
 
- /* h2.intro{
-     font-size: 30px;
- } */
+#back-music{
+    position:fixed;
+    bottom:5px;
+    right:0;
+    z-index:1;
+}
 
 /* =====================      LIKE BUTTON         ================== */
 
