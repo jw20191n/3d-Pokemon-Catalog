@@ -3,8 +3,16 @@ const newContainer = document.querySelector('.glider');
 let requestId = true;
 const input = document.getElementById('pokemon-filter-input');
 const form = document.getElementById('pokemon-filter-form');
+let exitDiv = document.getElementsByClassName('exitImg')[0];
+let exit = document.createElement('img');
+
 
 function getPokemon(){
+     
+    exit.src = 'pokemon_app/app/assets/images/Exit.png'
+    exit.style.height = '8%';
+    exit.style.width = '25%';
+    exitDiv.appendChild(exit);
  
     fetch('http://localhost:3000/pokemons')
     .then(resp => resp.json())
@@ -312,7 +320,6 @@ viewer.addEventListener('click', function(){
             scene.remove(model);  
             let startLogo = document.getElementsByClassName('start logo');
             startLogo[0].remove()
-            //renderScene();
             getPokemon();
             form.setAttribute('style', 'display:block');
             document.querySelector('.glider-prev').setAttribute('style', 'display:block');
@@ -351,76 +358,14 @@ input.addEventListener('input', ()=> {
                 div.innerHTML = `
                     <img src=${element.image} class="pokemonImg">`;
                 gliderTrack.appendChild(div);
-           });
+            });
         })
-
-        
 })
-
-//=======Attempting a 3d background =========
-// function loadBackGround( type ) {
-
-//     switch (type)
-
-
-//     let startImg = document.createElement('img');
-//     startImg.src='pokemon_app/app/assets/images/Start.png';
-//     startImg.style.marginLeft = '40%';
-//     startImg.className = 'start logo';
-//     container.appendChild(startImg)
-  
-//     var url = `https://poly.googleapis.com/v1/assets/${id}/?key=${API_KEY}`;
-
-//     var request = new XMLHttpRequest();
-//     request.open( 'GET', url, true ); 
-//     request.addEventListener( 'load', function ( event ) {
-
-//         var asset = JSON.parse( event.target.response );
-//         var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
-
-//         if ( format !== undefined ) {
-
-//             var obj = format.root;
-//             var mtl = format.resources.find( resource => { return resource.url.endsWith( 'mtl' ) } );
-
-//             var loader = new THREE.MTLLoader();
-//             loader.setCrossOrigin( true );
-//             loader.setMaterialOptions( { ignoreZeroRGBs: true } );
-//             loader.load( mtl.url, function ( materials ) {
-
-//                 var loader = new THREE.OBJLoader();
-//                 loader.setMaterials( materials );
-//                 loader.load( obj.url, function ( object ) {
-
-//                     var box = new THREE.Box3();
-//                     box.setFromObject( object );
-
-//                     // re-center
-
-//                     var center = box.getCenter();
-//                     center.y = box.min.y;
-//                     object.position.sub( center );
-
-//                     // scale
-
-//                     var scaler = new THREE.Group();
-//                     scaler.add( object );
-//                     scaler.position.set( 0, 0, 0 )
-//                     scaler.rotation.y -= 2;
-//                     scaler.scale.set(1.5,2,1.5);
-//                     scaler.name = "3d-model";
-//                     scaler.data_id = id;
-//                     scene.add( scaler );
-
-//                     renderer.render( scene, camera );
-                   
-//                 } );
-
-//             } );
-
-//         }
-
-//     } );
-//     request.send( null );
-
-// }
+exit.addEventListener('click',()=>{
+    document.getElementById('pokemonInfo').innerHTML = '';
+    newContainer.innerHTML = '';
+    let goodbye = document.createElement('img');
+    goodbye.src = "pokemon_app/app/assets/images/pikachu goodbye.gif"
+    goodbye.className = "center"
+    document.getElementById('pokemonInfo').appendChild(goodbye)
+})
