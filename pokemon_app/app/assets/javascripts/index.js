@@ -23,7 +23,7 @@ function renderPokemon({name, id, image, likes, move, poke_type}){
     div.classList.add('pokeCard');
     div.setAttribute('data-id', id);
     div.innerHTML = `
-        <img src=${image} class="pokemonImg">`;
+        <img src=pokemon_app/app/assets/images/${image} class="pokemonImg">`;
     newContainer.appendChild(div);  
 }
 
@@ -285,7 +285,7 @@ viewer.addEventListener('click', function(){
         let runAnimateCube = true;
         var animateCube = function() {
             requestAnimationFrame(animateCube);
-            model.rotation.y += .2;            
+            model.rotation.y += .3;            
             renderer.render(scene, camera);
         }
         if(runAnimateCube === true){
@@ -294,7 +294,10 @@ viewer.addEventListener('click', function(){
         
             //LET THE PAGE INFO RENDER 1 SECOND AFTER PAGE LOADED
         
-        
+            let music = document.createElement('AUDIO');
+            music.autoplay = true;
+            music.innerHTML = '<source src="pokemon_app/app/assets/audios/Start.mp3" type="audio/mpeg">';
+            container.appendChild(music);
 
         setTimeout(function(){
             runAnimateCube = false;
@@ -309,7 +312,7 @@ viewer.addEventListener('click', function(){
             document.querySelector('.glider-next').setAttribute('style', 'display:block');
             let info = document.getElementById('pokemonInfo')
             info.innerHTML = "<h2 class='intro' style='margin-left: -600px;font-size: 30px;text-align: center; color:whitesmoke;'>Please click on the Pokemon for more details.</h2><br><h2 class='intro' style='margin-left: -600px;font-size: 30px;text-align: center;color:whitesmoke;'>Type in a name or type to filter Pokemon.</h2>";
-            }, 1000);
+            }, 1500);
         if(runAnimateCube === false){
             console.log(false)
             //  scene.remove(model)

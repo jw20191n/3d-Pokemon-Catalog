@@ -8,6 +8,7 @@ class CreatePokemons < ActiveRecord::Migration[6.0]
       t.integer :likes
       t.string :model_key
       t.string :size
+      t.string :audio
       t.timestamps
     end
   end
