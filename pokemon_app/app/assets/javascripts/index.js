@@ -1,60 +1,51 @@
-const container = document.getElementById('container');
+const container = document.getElementById("container glider-contain");
 const newContainer = document.querySelector('.glider');
 let requestId = true;
 const input = document.getElementById('pokemon-filter-input');
 const form = document.getElementById('pokemon-filter-form');
 
+function getPokemon(){
+ 
+    fetch('http://localhost:3000/pokemons')
+    .then(resp => resp.json())
+    .then(data => {
+        for(const pokemon of data){
+            renderPokemon(pokemon);
+        }
+        glider();
+        form.setAttribute('style', 'display:block');
+    })
+}
+
+function renderPokemon({name, id, image, likes, move, poke_type}){
+
+    let div = document.createElement('div');
+    div.classList.add('pokeCard');
+    div.setAttribute('data-id', id);
+    div.innerHTML = `
+        <img src=${image} class="pokemonImg">`;
+    newContainer.appendChild(div);  
+}
+
+function glider(){
+    new Glider(document.querySelector('.glider'), {
+        slidesToScroll: 1,
+        slidesToShow: 7,
+        draggable: true,
+        dots: '.dots',
+        arrows: {
+            prev: '.glider-prev',
+            next: '.glider-next'
+        }
+      })
+}
+
+
 document.addEventListener('DOMContentLoaded', ()=>{
 
-    function getPokemon(){
- 
-        fetch('http://localhost:3000/pokemons')
-        .then(resp => resp.json())
-        .then(data => {
-            for(const pokemon of data){
-                renderPokemon(pokemon);
-            }
-            glider();
-            // form.setAttribute('style', 'display:block');
-        })
-    }
-
-    function renderPokemon({name, id, image, likes, move, poke_type}){
-
-        let div = document.createElement('div');
-        div.classList.add('pokeCard');
-        div.setAttribute('data-id', id);
-        div.innerHTML = `
-            <img src=${image} class="pokemonImg">`;
-        newContainer.appendChild(div);  
-    }
-
-    function glider(){
-        new Glider(document.querySelector('.glider'), {
-            slidesToScroll: 1,
-            slidesToShow: 7,
-            draggable: true,
-            dots: '.dots',
-            arrows: {
-                prev: '.glider-prev',
-                next: '.glider-next'
-            }
-          })
-    }
-
-    //LET THE PAGE INFO RENDER 1 SECOND AFTER PAGE LOADED
-    setTimeout(function(){
-        renderScene();
-        getPokemon();
-        form.setAttribute('style', 'display:block');
-        document.querySelector('.glider-prev').setAttribute('style', 'display:block');
-        document.querySelector('.glider-next').setAttribute('style', 'display:block');
-        document.getElementById('pokemonInfo').innerHTML = "<h2 id='intro'>Please click on the Pokemon for more details.</h2><h2 id='intro'>Type in name or type to filter Pokemon.</h2>";
-
-    }, 3000);
-
-    // renderScene();
-    // getPokemon();
+    
+    renderScene();
+    loadStart('aBDajZAsuFE');
 })
 
     // POLY REST API
@@ -88,6 +79,8 @@ function renderScene(){
     renderer.render( scene, camera );
 
 }
+
+//====================== Load Asset For Pokemon ===================
 function loadAsset( id, size ) {
     if(scene.getObjectByName('3d-model') !== undefined){
         let selectedObject = scene.getObjectByName('3d-model');
@@ -159,6 +152,73 @@ function loadAsset( id, size ) {
 
 }
 
+//====================== Load Asset For Start Screen ===================
+function loadStart( id ) {
+
+    let startImg = document.createElement('img');
+    startImg.src='pokemon_app/app/assets/images/Start.png';
+    startImg.style.marginLeft = '40%';
+    startImg.className = 'start logo';
+    container.appendChild(startImg)
+  
+    var url = `https://poly.googleapis.com/v1/assets/${id}/?key=${API_KEY}`;
+
+    var request = new XMLHttpRequest();
+    request.open( 'GET', url, true ); 
+    request.addEventListener( 'load', function ( event ) {
+
+        var asset = JSON.parse( event.target.response );
+        var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
+
+        if ( format !== undefined ) {
+
+            var obj = format.root;
+            var mtl = format.resources.find( resource => { return resource.url.endsWith( 'mtl' ) } );
+
+            var loader = new THREE.MTLLoader();
+            loader.setCrossOrigin( true );
+            loader.setMaterialOptions( { ignoreZeroRGBs: true } );
+            loader.load( mtl.url, function ( materials ) {
+
+                var loader = new THREE.OBJLoader();
+                loader.setMaterials( materials );
+                loader.load( obj.url, function ( object ) {
+
+                    var box = new THREE.Box3();
+                    box.setFromObject( object );
+
+                    // re-center
+
+                    var center = box.getCenter();
+                    center.y = box.min.y;
+                    object.position.sub( center );
+
+                    // scale
+
+                    var scaler = new THREE.Group();
+                    scaler.add( object );
+                    scaler.position.set( 0, 0, 0 )
+                    scaler.rotation.y -= 2;
+                    scaler.scale.set(1.5,2,1.5);
+                    scaler.name = "3d-model";
+                    scaler.data_id = id;
+                    scene.add( scaler );
+
+                    renderer.render( scene, camera );
+                   
+                } );
+
+            } );
+
+        }
+
+    } );
+    request.send( null );
+
+}
+
+
+
 let raycaster = new THREE.Raycaster();
 let mouse= new THREE.Vector2();
 function onMouseMove(event){
@@ -168,10 +228,8 @@ function onMouseMove(event){
     mouse.y = -(event.clientY / window.innerHeight) *2 + 1;
 
     raycaster.setFromCamera(mouse, camera);
-    alert("Cursor at: " + mouse.x + ", " + mouse.y);
   }
 
-//window.addEventListener('click', onMouseMove);  ----- just checking mouse coordinates for positioning models
 
 // resizing event
 window.addEventListener('resize', () =>{
@@ -190,7 +248,7 @@ if ( API_KEY.startsWith( '**' ) ) {
 //================================Animation Loop Controls====================
 
 function update(model) {
-
+    //console.log(model
     var time = performance.now() / 5000;
     model.rotation.y = Math.sin( time ) * 5; 
     camera.lookAt( 0, 1.5, 0 );
@@ -211,14 +269,51 @@ function stop(model) {
 
 viewer.addEventListener('click', function(){
     let model = scene.getObjectByName('3d-model')
-    //console.log(model);
-    if (requestId){
-        stop(model);
-        requestId = false;
-       
-    }else{
-        play(model);
-        requestId = true;
+
+    if(model.data_id !== 'aBDajZAsuFE'){
+        //console.log(model.data_id);
+        if (requestId){
+            stop(model);
+            requestId = false;
+        
+        }else{
+            play(model);
+            requestId = true;
+        }
+    }
+    else if (model.data_id === 'aBDajZAsuFE'){
+        let runAnimateCube = true;
+        var animateCube = function() {
+            requestAnimationFrame(animateCube);
+            model.rotation.y += .2;            
+            renderer.render(scene, camera);
+        }
+        if(runAnimateCube === true){
+            animateCube();
+        }
+        
+            //LET THE PAGE INFO RENDER 1 SECOND AFTER PAGE LOADED
+        
+        
+
+        setTimeout(function(){
+            runAnimateCube = false;
+            console.log(model);
+            scene.remove(model);  
+            let startLogo = document.getElementsByClassName('start logo');
+            startLogo[0].remove()
+            //renderScene();
+            getPokemon();
+            form.setAttribute('style', 'display:block');
+            document.querySelector('.glider-prev').setAttribute('style', 'display:block');
+            document.querySelector('.glider-next').setAttribute('style', 'display:block');
+            let info = document.getElementById('pokemonInfo')
+            info.innerHTML = "<h2 id='intro' align='center'>Please click on the Pokemon for more details.</h2><br><h2 id='intro' align='center'>Type in a name or type to filter Pokemon.</h2>";
+            }, 3000);
+        if(runAnimateCube === false){
+            console.log(false)
+            //  scene.remove(model)
+        }
     }
 })
 
@@ -251,3 +346,71 @@ input.addEventListener('input', ()=> {
 
         
 })
+
+//=======Attempting a 3d background =========
+// function loadBackGround( type ) {
+
+//     switch (type)
+
+
+//     let startImg = document.createElement('img');
+//     startImg.src='pokemon_app/app/assets/images/Start.png';
+//     startImg.style.marginLeft = '40%';
+//     startImg.className = 'start logo';
+//     container.appendChild(startImg)
+  
+//     var url = `https://poly.googleapis.com/v1/assets/${id}/?key=${API_KEY}`;
+
+//     var request = new XMLHttpRequest();
+//     request.open( 'GET', url, true ); 
+//     request.addEventListener( 'load', function ( event ) {
+
+//         var asset = JSON.parse( event.target.response );
+//         var format = asset.formats.find( format => { return format.formatType === 'OBJ'; } );
+
+//         if ( format !== undefined ) {
+
+//             var obj = format.root;
+//             var mtl = format.resources.find( resource => { return resource.url.endsWith( 'mtl' ) } );
+
+//             var loader = new THREE.MTLLoader();
+//             loader.setCrossOrigin( true );
+//             loader.setMaterialOptions( { ignoreZeroRGBs: true } );
+//             loader.load( mtl.url, function ( materials ) {
+
+//                 var loader = new THREE.OBJLoader();
+//                 loader.setMaterials( materials );
+//                 loader.load( obj.url, function ( object ) {
+
+//                     var box = new THREE.Box3();
+//                     box.setFromObject( object );
+
+//                     // re-center
+
+//                     var center = box.getCenter();
+//                     center.y = box.min.y;
+//                     object.position.sub( center );
+
+//                     // scale
+
+//                     var scaler = new THREE.Group();
+//                     scaler.add( object );
+//                     scaler.position.set( 0, 0, 0 )
+//                     scaler.rotation.y -= 2;
+//                     scaler.scale.set(1.5,2,1.5);
+//                     scaler.name = "3d-model";
+//                     scaler.data_id = id;
+//                     scene.add( scaler );
+
+//                     renderer.render( scene, camera );
+                   
+//                 } );
+
+//             } );
+
+//         }
+
+//     } );
+//     request.send( null );
+
+// }
