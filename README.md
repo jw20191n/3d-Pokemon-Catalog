@@ -1,1 +1,1 @@
-# 3d-Pokemon-Catalog  <span style="color: green">ϞϞ(๑⚈ ․̫ ⚈๑)∩</span>
+# 3d-Pokemon-Catalog    ϞϞ(๑⚈ ․̫ ⚈๑)∩
