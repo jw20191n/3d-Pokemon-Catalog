@@ -14,8 +14,7 @@
 ## Credites
 * The awesome 3d models on this website are made by [Tipatat Chennavasin](https://poly.google.com/user/8ri62AdjHrC).
 * Images of Pokemon used on the website are from [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Main_Page).
-* Pokecards template were from [Deviantart](https://www.deviantart.com/the-ketchi/gallery/45279583/resources) made by user The-Ketchi.
-<br/>
-These project won't be possible without the artworks from them.
+* Pokecards template were from [Deviantart](https://www.deviantart.com/the-ketchi/gallery/45279583/resources) made by user The-Ketchi.<br/>
+These project won't be possible without their artworks.
 <br/>
 Pika pika.
