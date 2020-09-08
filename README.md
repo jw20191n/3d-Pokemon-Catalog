@@ -1,7 +1,7 @@
 <h1 align="middle"> 3d-Pokemon-Catalog </h1>
 
 ## Description
-3d Pokemon Catalog is a playground to test around 3d models. One could click on the Pokemon picture at the sliding bar on top of the screen to see according 3d model. When click on the 3d pokemon, animation would be triggered or stopped. 
+3d Pokemon Catalog is a playground to test around 3d models. One could click on the Pokemon picture at the sliding bar on top of the screen to see according 3d model. When click on the 3d pokemon, animation would be triggered or stopped. This is a team project with amazing [@CastagnaTM](https://github.com/CastagnaTM).
 
 ## ϞϞ(๑⚈ ․̫ ⚈๑)∩  [Video Demo](https://youtu.be/t1TDytIS-20)
 
