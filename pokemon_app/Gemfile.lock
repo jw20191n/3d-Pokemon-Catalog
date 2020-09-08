@@ -72,7 +72,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.3.0)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -86,11 +86,13 @@ GEM
     minitest (5.12.2)
     msgpack (1.3.1)
     nio4r (2.5.2)
-    nokogiri (1.10.4)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
+
     puma (3.12.1)
-    rack (2.0.7)
-    rack-cors (1.0.3)
+    rack (2.2.3)
+    rack-cors (1.0.5)
+
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.0)
@@ -141,8 +143,8 @@ GEM
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     websocket-driver (0.7.1)
-      websocket-extensions (>= 0.1.5)
-    websocket-extensions (0.1.4)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.5)
     zeitwerk (2.2.0)
 
 PLATFORMS
@@ -152,7 +154,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   listen (>= 3.0.5, < 3.2)
-  puma (~> 3.11)
+  puma (~> 3.12)
   rack-cors
   rails (~> 6.0.0)
   spring
