@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="glider.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel='shortcut icon' href='pokemon_app/app/assets/images/pikachu_favicon.png' type='image/png' />
+    <title>3D Pokémon Collection</title>
+</head>
+<body>
+    <header>
+        <form id="pokemon-filter-form" style="display:none">
+            <div class="exitImg"></div>
+            <input type="text" id="pokemon-filter-input" placeholder="Filter Pokemon">
+        </form>
+    </header>
+
+    <!-- Gliding pokemon bar -->
+    <div id="container glider-contain" style="background-color: #acd36c;">
+        <div class="glider">
+            <!-- append cards here -->
+        </div>
+        <button role="button" aria-label="Previous" class="glider-prev" style="display:none">«</button>
+        <button role="button" aria-label="Next" class="glider-next" style="display:none">»</button>
+        <div role="tablist" class="dots"></div>
+    </div>
+
+    <!-- Canvas -->
+    <div id="viewer"></div>
+    
+    <div id="pokemonInfo">
+        <!-- pokemon Info would be appended here -->
+    </div>
+
+    <!-- 3d stuff -->
+    <script src="pokemon_app/app/assets/javascripts/three/src/Three.min.js"></script>
+    <script src="pokemon_app/app/assets/javascripts/three/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="pokemon_app/app/assets/javascripts/three/examples/js/loaders/MTLLoader.js"></script>
+    <script src="pokemon_app/app/assets/javascripts/three/examples/js/loaders/OBJLoader.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- glider.js -->
+    <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
+    <!-- custom javascript -->
+    <script src="pokemon_app/app/assets/javascripts/index.js"></script>
+    <script src="pokemon_app/app/assets/javascripts/info.js"></script>
+</body>
+</html>
