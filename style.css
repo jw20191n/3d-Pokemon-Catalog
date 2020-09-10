@@ -103,16 +103,15 @@ button.custom-button{
     outline: none;
   }
 
-/* #exitImg{
-    width:60px;
+#exit-img{
     height:50px; 
     float: left;
-  }  */
+  } 
 
-  .header{
-      display: flex;
-      flex-direction: row;
-  }
+header {
+    display: flex;
+    flex-direction: row;
+}
 
   .center{
       margin-left:-550px;

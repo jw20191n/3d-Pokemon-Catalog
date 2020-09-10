@@ -3,40 +3,46 @@ const newContainer = document.querySelector('.glider');
 let requestId = true;
 const input = document.getElementById('pokemon-filter-input');
 const form = document.getElementById('pokemon-filter-form');
+//exit image
 let exitDiv = document.getElementsByClassName('exitImg')[0];
 let exit = document.createElement('img');
 
+// POLY REST API
+const API_KEY = 'AIzaSyBBucFwpS56u9Os49tydauh3bgUaQtkLdg';
+let scene, camera, renderer;
+const WIDTH = viewer.offsetWidth;
+const HEIGHT = viewer.offsetHeight;
+camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.01, 100 );
+camera.position.set( 5, 3, 5 );
+camera.lookAt( 0, 1.5, 0 );
 
+scene = new THREE.Scene();
+scene.background = new THREE.Color(0x008080);
+renderer = new THREE.WebGLRenderer();
+
+//when the page loaded, render the 3d scene with "renderScene" and the animation with "loadStart"
+document.addEventListener('DOMContentLoaded', ()=>{
+    renderScene();
+    loadStart('aBDajZAsuFE');
+})
+
+//
 function getPokemon(){
-    // let exit = document.createElement('img');
-    exit.src = 'pokemon_app/app/assets/images/Exit.png'
-    exit.setAttribute('id', 'exit-img');
-    exit.style.height = '60px';
-    exit.style.width = '100px';
-    // exit.style.margin-top = '20px';
-    exitDiv.appendChild(exit);
- 
     fetch('http://localhost:3000/pokemons')
     .then(resp => resp.json())
     .then(data => {
         for(const pokemon of data){
             renderPokemon(pokemon);
         }
-        glider();
+        loadGlider();
+        playBgMusic();
+        loadExitImage();
         form.setAttribute('style', 'display:block');
-        let music = document.createElement('AUDIO');
-        music.autoplay = true;
-        music.setAttribute('loop', 'loop');
-        music.setAttribute('id', 'back-music');
-        // music.setAttribute('controls', 'controls');
-        music.innerHTML = '<source src="pokemon_app/app/assets/audios/background.mp3" type="audio/mpeg">';
-        container.appendChild(music);
-
     })
 }
 
+//render pokemon pictures in glider
 function renderPokemon({name, id, image, likes, move, poke_type}){
-
     let div = document.createElement('div');
     div.classList.add('pokeCard');
     div.setAttribute('data-id', id);
@@ -45,7 +51,8 @@ function renderPokemon({name, id, image, likes, move, poke_type}){
     newContainer.appendChild(div);  
 }
 
-function glider(){
+//load glider
+function loadGlider(){
     new Glider(document.querySelector('.glider'), {
         slidesToScroll: 1,
         slidesToShow: 7,
@@ -58,27 +65,24 @@ function glider(){
       })
 }
 
+//play background music when page loaded
+function playBgMusic(){
+    let music = document.createElement('AUDIO');
+    music.autoplay = true;
+    music.setAttribute('loop', 'loop');
+    music.setAttribute('id', 'back-music');
+    music.innerHTML = '<source src="pokemon_app/app/assets/audios/background.mp3" type="audio/mpeg">';
+    container.appendChild(music);
+}
 
-document.addEventListener('DOMContentLoaded', ()=>{
+//load exit image next to filter
+function loadExitImage(){
+    exit.src = 'pokemon_app/app/assets/images/Exit.png'
+    exit.setAttribute('id', 'exit-img');
+    exitDiv.appendChild(exit);
+}
 
-    renderScene();
-    loadStart('aBDajZAsuFE');
-})
-
-    // POLY REST API
-    const API_KEY = 'AIzaSyBBucFwpS56u9Os49tydauh3bgUaQtkLdg';
-    let scene, camera, renderer;
-    const WIDTH = viewer.offsetWidth;
-    const HEIGHT = viewer.offsetHeight;
-    camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.01, 100 );
-    camera.position.set( 5, 3, 5 );
-    camera.lookAt( 0, 1.5, 0 );
-
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x008080);
-    renderer = new THREE.WebGLRenderer();
-
-
+//render 3d scene
 function renderScene(){
 
     var ambient = new THREE.HemisphereLight( 0xbbbbff, 0x886666, 0.75 );
@@ -97,7 +101,7 @@ function renderScene(){
 
 }
 
-//====================== Load Asset For Pokemon ===================
+//====================== Load 3d Asset For Pokemon ===================
 function loadAsset( id, size ) {
     if(scene.getObjectByName('3d-model') !== undefined){
         let selectedObject = scene.getObjectByName('3d-model');
@@ -139,7 +143,7 @@ function loadAsset( id, size ) {
 
                     var scaler = new THREE.Group();
                     scaler.add( object );
-                    scaler.position.set( -5, 1, 0 )
+                    scaler.position.set( -5, 0, 0 )
                     if ( id === 'cfX_C2D69i9'){
                         scaler.position.set( -5, -1, 0 )  
                     }
@@ -256,9 +260,7 @@ window.addEventListener('resize', () =>{
   })
 
 if ( API_KEY.startsWith( '**' ) ) {
-
     alert( 'Sample incorrectly set up. Please enter your API Key for the Poly API in the API_KEY variable.' );
-
 }
 
 
@@ -358,7 +360,7 @@ input.addEventListener('input', ()=> {
                 div.classList.add('pokeCard');
                 div.setAttribute('data-id', element.id);
                 div.innerHTML = `
-                    <img src=${element.image} class="pokemonImg">`;
+                    <img src=pokemon_app/app/assets/images/${element.image} class="pokemonImg">`;
                 gliderTrack.appendChild(div);
             });
         })

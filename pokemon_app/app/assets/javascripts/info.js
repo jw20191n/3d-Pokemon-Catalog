@@ -1,5 +1,5 @@
-
 //newContainer pokemonInfo is defined in index.js
+//which is the xar
 const pokemonInfo = document.getElementById('pokemonInfo');
 
 
@@ -98,6 +98,7 @@ function printInfo(data){
     pokemonInfo.setAttribute('style', `background-image: url(pokemon_app/app/assets/images/${data.poke_type}.png);`)
 }
 
+
 pokemonInfo.addEventListener('click', ()=>{
     let target = event.target;
     let pTag;
@@ -121,6 +122,7 @@ pokemonInfo.addEventListener('click', ()=>{
     }
 });
 
+//increment likes when click on the heart image
 function incrementLike(tempId, number){
     fetch(`http://localhost:3000/pokemons/${tempId}`, {
         method: 'PATCH',
