@@ -1,7 +1,7 @@
 //newContainer pokemonInfo is defined in index.js
-//which is the xar
-const pokemonInfo = document.getElementById('pokemonInfo');
+// const newContainer = document.querySelector('.glider');
 
+const pokemonInfo = document.getElementById('pokemonInfo');
 
 newContainer.addEventListener('click', () => {
     let target = event.target;

@@ -15,10 +15,11 @@ const HEIGHT = viewer.offsetHeight;
 camera = new THREE.PerspectiveCamera( 60, WIDTH / HEIGHT, 0.01, 100 );
 camera.position.set( 5, 3, 5 );
 camera.lookAt( 0, 1.5, 0 );
-
 scene = new THREE.Scene();
 scene.background = new THREE.Color(0x008080);
 renderer = new THREE.WebGLRenderer();
+
+
 
 //when the page loaded, render the 3d scene with "renderScene" and the animation with "loadStart"
 document.addEventListener('DOMContentLoaded', ()=>{
@@ -84,21 +85,17 @@ function loadExitImage(){
 
 //render 3d scene
 function renderScene(){
-
     var ambient = new THREE.HemisphereLight( 0xbbbbff, 0x886666, 0.75 );
     ambient.position.set( -0.5, 0.75, -1 );
     scene.add( ambient );
-
     var light = new THREE.DirectionalLight( 0xffffff, 0.75 );
     light.position.set( 1, 0.75, 0.5 );
     scene.add( light );
-
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     viewer.appendChild( renderer.domElement );
     renderer.render( scene, camera );
-
 }
 
 //====================== Load 3d Asset For Pokemon ===================
@@ -239,18 +236,15 @@ function loadStart( id ) {
 }
 
 
-
 let raycaster = new THREE.Raycaster();
 let mouse= new THREE.Vector2();
+
 function onMouseMove(event){
     event.preventDefault();
-
     mouse.x = (event.clientX / window.innerWidth) *2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) *2 + 1;
-
     raycaster.setFromCamera(mouse, camera);
   }
-
 
 // resizing event
 window.addEventListener('resize', () =>{
@@ -272,6 +266,7 @@ function update(model) {
     model.rotation.y = Math.sin( time ) * 5; 
     camera.lookAt( 0, 1.5, 0 );
 }
+
 function render() {
     renderer.render( scene, camera );
 }
@@ -311,13 +306,12 @@ viewer.addEventListener('click', function(){
             animateCube();
         }
         
-            //LET THE PAGE INFO RENDER 1 SECOND AFTER PAGE LOADED
+        // let music = document.createElement('AUDIO');
+        // music.autoplay = true;
+        // music.innerHTML = '<source src="pokemon_app/app/assets/audios/Start.mp3" type="audio/mpeg">';
+        // container.appendChild(music);
         
-        let music = document.createElement('AUDIO');
-        music.autoplay = true;
-        music.innerHTML = '<source src="pokemon_app/app/assets/audios/Start.mp3" type="audio/mpeg">';
-        container.appendChild(music);
-
+        //LET THE PAGE INFO RENDER 1 SECOND AFTER PAGE LOADED
         setTimeout(function(){
             runAnimateCube = false;
             console.log(model);
@@ -365,12 +359,17 @@ input.addEventListener('input', ()=> {
             });
         })
 })
+
 exit.addEventListener('click',()=>{
-    document.getElementById('pokemonInfo').innerHTML = '';
+    let pokemonInfoCard = document.getElementById('pokemonInfo');
+    pokemonInfoCard.innerHTML = '';
+    pokemonInfoCard.style = '';
     newContainer.innerHTML = '';
+    container.innerHTML = '';
+    scene.remove(scene.getObjectByName('3d-model'));
+    //append a goodbye image
     let goodbye = document.createElement('img');
     goodbye.src = "pokemon_app/app/assets/images/pikachu goodbye.gif"
     goodbye.className = "center"
     document.getElementById('pokemonInfo').appendChild(goodbye);
-    container.innerHTML = '';
 })
