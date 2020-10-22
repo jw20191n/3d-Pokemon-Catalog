@@ -12,7 +12,7 @@
 <br/>
 
 ## Technology
-* Integrated three.js and Google Poly API to generate animated 3D Pokémon models.
+* Integrated [three.js](https://threejs.org/) and [Google Poly API](https://developers.google.com/poly) to generate animated 3D Pokémon models.
 * Implemented [Glider.js](https://nickpiscitelli.github.io/Glider.js/) for the sliding navigation bar to promote user experience.
 * Built RESTful JSON API with Ruby on Rails.
 
